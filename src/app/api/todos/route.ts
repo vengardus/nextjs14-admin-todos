@@ -1,6 +1,7 @@
-import { IResponseTodos, initResponse } from "@/interface/response.interface";
 import prisma from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
+import * as yup from "yup";
+import { IResponseTodos, initResponse } from "@/interface/response.interface";
 
 const validateGet = ({
     take,
@@ -12,7 +13,6 @@ const validateGet = ({
     let messageError = null;
     if (isNaN(take)) messageError = "Take debe ser un número";
     else if (isNaN(skip)) messageError = "Skip debe ser un número";
-
     return messageError;
 };
 
@@ -34,10 +34,10 @@ export async function GET(request: Request) {
             take: take,
             skip: skip,
         });
-        data.data = todos
-        data.success = true
-        data.status = 200
-        data.message = todos.length? '' : 'No hay registros'
+        data.data = todos;
+        data.success = true;
+        data.status = todos.length ? 200 : 204;
+        data.message = todos.length ? "" : "No hay registros";
     } catch (error) {
         error instanceof Prisma.PrismaClientKnownRequestError
             ? (data.message = error.message)
@@ -45,4 +45,27 @@ export async function GET(request: Request) {
     }
 
     return Response.json({ data: data }, { status: data.status });
+}
+
+const postSchema = yup.object({
+    description: yup.string().required(),
+    complete: yup.boolean().optional().default(false),
+});
+
+export async function POST(request: Request) {
+    const data = initResponse()
+    try {
+        //const body = await postSchema.validate(await request.json());
+        // ojo: de esta manera ignora algun campo que no pertenezca al modelo
+        const {description, complete} = await postSchema.validate(await request.json());
+        const todo = await prisma.todo.create({ data: {description, complete} });
+        data.data = todo
+        data.success = true
+        data.status = 201
+    } catch (error) {
+        data.message = ((error as any).message?? 'Ocurrió un error!!!') as string
+        data.status = 400
+    }
+
+    return Response.json(data);
 }
