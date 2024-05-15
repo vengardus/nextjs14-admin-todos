@@ -30,7 +30,8 @@ export async function GET(request: Request, segments: ISegments) {
             : (data.message = "Ocurrió un error!!!");
     }
 
-    return Response.json({ data }, { status: data.status });
+    //return Response.json({ data }, { status: data.status });
+    return Response.json(data);
 }
 
 const putSchema = yup.object({
@@ -75,5 +76,6 @@ export async function PUT(request: Request, segments: ISegments) {
         }
     }
 
-    return Response.json({ data }, { status: data.status });
+    //return Response.json({ data }, { status: data.status });
+    return Response.json(data);
 }
