@@ -8,7 +8,6 @@ import { Todo } from "@prisma/client";
 const sleep = (seconds: number = 0) => {
     return new Promise((resolve) => {
         setTimeout(() => {
-            console.log('resolve')
             resolve(true);
         }, seconds * 1000);
     });
@@ -18,9 +17,9 @@ export const actionToggleTodo = async (
     id: string,
     complete: boolean
 ): Promise<Todo> => {
-    console.log('pre sleep')
-    await sleep(3)
-    console.log('post sleep')
+    // para pruebas del Optimistic
+    //await sleep(3)
+
     const todo = await prisma.todo.findFirst({ where: { id } });
     if (!todo) throw `No se encontró Todo con id=${id}`;
 

@@ -1,3 +1,6 @@
+export const dynamic = 'force-dinamyc'
+export const revalidate = 0
+
 import prisma from "@/lib/prisma";
 import { TodosTemplate } from "@/components/dashboard/todos/TodosTemplate";
 import { Metadata } from "next";
@@ -10,6 +13,8 @@ export const metadata: Metadata = {
 
 export default async function RestTodosPage() {
     const todos = await prisma.todo.findMany({ orderBy: { description: 'asc' } })
+
+    console.log('construido - sever-todo')
 
     return (
         <>
