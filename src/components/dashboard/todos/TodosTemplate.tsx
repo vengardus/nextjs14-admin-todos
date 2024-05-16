@@ -2,7 +2,8 @@
 import { useRouter } from "next/navigation"
 import { Todo } from "@prisma/client"
 import { TodoItem } from "./TodoItem"
-import * as apiTodos from "@/actions/todos.actions"
+//import * as apiTodos from "@/actions-api/todos.actions"
+import { actionToggleTodo } from "@/actions/todo.actions"
 
 
 interface Props {
@@ -12,18 +13,19 @@ interface Props {
 export const TodosTemplate = ({ todos = [] }: Props) => {
   const router = useRouter()
 
-  const toggleTodo = async (id:string, complete:boolean):Promise<void> => {
-    await apiTodos.updateTodo(id, complete)
-    router.refresh()
-  }
+  // Esto era para restApi
+  // const toggleTodo = async (id:string, complete:boolean):Promise<void> => {
+  //   await apiTodos.updateTodo(id, complete)
+  //   router.refresh()
+  // }
 
   return (
-    <>
+    <div className="grid grid-cols-3 gap-5">
       {
         todos.map(todo => (
-          <TodoItem key={todo.id} todo={todo} toggleTodo={toggleTodo}/>
+          <TodoItem key={todo.id} todo={todo} toggleTodo={actionToggleTodo}/>
         ))
       }
-    </>
+    </div>
   )
 }

@@ -12,6 +12,11 @@ const menuItems = [
         title: 'Rest TODOS',
         path: '/dashboard/rest-todos',
         icon: <CiBookmarkCheck size={30}/>
+    },
+    {
+        title: 'Server TODOS',
+        path: '/dashboard/server-todos',
+        icon: <CiBookmarkCheck size={30}/>
     }
 ]
 

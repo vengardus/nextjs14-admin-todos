@@ -5,7 +5,7 @@ import styles from "./TodoItem.module.css"
 
 interface Props {
   todo: Todo,
-  toggleTodo: (id: string, complete: boolean) => Promise<void>
+  toggleTodo: (id: string, complete: boolean) => Promise<Todo>
 }
 
 export const TodoItem = ({ todo, toggleTodo }: Props) => {
@@ -15,7 +15,7 @@ export const TodoItem = ({ todo, toggleTodo }: Props) => {
       className={todo.complete ? styles.todoDone : styles.todoPending}
       onClick={() => toggleTodo(todo.id, !todo.complete)}
     >
-      TodosItem: {todo.id} - {todo.description}
+      {todo.description}
     </div>
   )
 }
