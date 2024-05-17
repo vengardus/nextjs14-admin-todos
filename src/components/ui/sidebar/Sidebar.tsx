@@ -1,22 +1,31 @@
-import { CiBookmarkCheck, CiLogout } from "react-icons/ci"
-import { SidebarItem } from "./SidebarItem"
 import Image from "next/image"
+import { SidebarItem } from "./SidebarItem"
+import {
+    IoBookmarkOutline,
+    IoCheckboxOutline, IoCodeOutline, IoListOutline, IoLogOutOutline
+} from "react-icons/io5"
+
 
 const menuItems = [
     {
         title: 'Dashboard',
         path: '/dashboard',
-        icon: <CiBookmarkCheck size={30}/>
-    }, 
+        icon: <IoBookmarkOutline size={30} />
+    },
     {
         title: 'Rest TODOS',
         path: '/dashboard/rest-todos',
-        icon: <CiBookmarkCheck size={30}/>
+        icon: <IoCheckboxOutline size={30} />
     },
     {
         title: 'Server TODOS',
         path: '/dashboard/server-todos',
-        icon: <CiBookmarkCheck size={30}/>
+        icon: <IoListOutline size={30} />
+    },
+    {
+        title: 'Cookies',
+        path: '/dashboard/cookies',
+        icon: <IoCodeOutline size={30} />
     }
 ]
 
@@ -53,7 +62,7 @@ export const Sidebar = () => {
                 <ul className="space-y-2 tracking-wide mt-8">
                     {
                         menuItems.map(item => (
-                            <SidebarItem key={item.title} {...item}/>
+                            <SidebarItem key={item.title} {...item} />
                         ))
                     }
                 </ul>
@@ -61,7 +70,7 @@ export const Sidebar = () => {
 
             <div className="px-6 -mx-6 pt-4 flex justify-between items-center border-t">
                 <button className="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group">
-                    <CiLogout />
+                    <IoLogOutOutline />
                     <span className="group-hover:text-gray-700">Logout</span>
                 </button>
             </div>
