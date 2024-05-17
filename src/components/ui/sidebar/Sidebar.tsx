@@ -1,6 +1,7 @@
 import Image from "next/image"
 import { SidebarItem } from "./SidebarItem"
 import {
+    IoBasketOutline,
     IoBookmarkOutline,
     IoCheckboxOutline, IoCodeOutline, IoListOutline, IoLogOutOutline
 } from "react-icons/io5"
@@ -26,6 +27,11 @@ const menuItems = [
         title: 'Cookies',
         path: '/dashboard/cookies',
         icon: <IoCodeOutline size={30} />
+    },
+    {
+        title: 'Products',
+        path: '/dashboard/products',
+        icon: <IoBasketOutline size={30} />
     }
 ]
 
