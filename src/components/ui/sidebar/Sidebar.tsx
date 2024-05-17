@@ -5,6 +5,7 @@ import {
     IoBookmarkOutline,
     IoCheckboxOutline, IoCodeOutline, IoListOutline, IoLogOutOutline
 } from "react-icons/io5"
+import Link from "next/link"
 
 
 const menuItems = [
@@ -41,7 +42,7 @@ export const Sidebar = () => {
             <div>
                 <div className="-mx-6 px-6 py-4">
                     {/* TODO: Next/Link hacia dashboard */}
-                    <a href="#" title="home">
+                    <Link href="/dashboard" title="home">
                         {/* Next/Image */}
                         <Image
                             src="https://tailus.io/sources/blocks/stats-cards/preview/images/logo.svg"
@@ -49,7 +50,7 @@ export const Sidebar = () => {
                             width={50}
                             height={50}
                         />
-                    </a>
+                    </Link>
                 </div>
 
                 <div className="mt-8 text-center">

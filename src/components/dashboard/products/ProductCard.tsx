@@ -1,14 +1,29 @@
+"use client"
+
 import { Product } from "@/data/products"
 import Image from "next/image"
 import { IoAddCircleOutline, IoTrashOutline } from "react-icons/io5"
 import { Star } from "./Star"
+import { actionAddProductCart, actionRemoveProductCart } from "@/actions/shopping_cart.actions"
+import { useRouter } from "next/navigation"
 
 
 interface Props {
     product: Product
 }
 
-export const ProductCard = ({product}:Props) => {
+export const ProductCard = ({ product }: Props) => {
+    const router = useRouter()
+
+    const onAddProductCart = () => {
+        actionAddProductCart(product.id)
+        router.refresh()
+    }
+
+    const onRemoveProductCart = () => {
+        actionRemoveProductCart(product.id)
+        router.refresh()
+    }
 
     return (
         <div className="bg-white shadow rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-100">
@@ -19,7 +34,7 @@ export const ProductCard = ({product}:Props) => {
                     width={500}
                     height={500}
                     className="rounded"
-                    src={product.image}                    
+                    src={product.image}
                     alt="product image" />
             </div>
 
@@ -36,7 +51,7 @@ export const ProductCard = ({product}:Props) => {
                     {/* Stars */}
                     {
                         Array(product.rating).fill(0).map((value, index) => (
-                            <Star key={index}/>
+                            <Star key={index} />
                         ))
                     }
 
@@ -49,17 +64,21 @@ export const ProductCard = ({product}:Props) => {
 
                 {/* Price and Add to Cart */}
                 <div className="flex items-center justify-between">
-                    <span className="text-3xl font-bold text-gray-900 dark:text-white">
+                    <span className="text-2xl font-bold text-gray-900 dark:text-white">
                         ${product.price}
                     </span>
 
                     <div className="flex">
                         <button
-                            className="text-white mr-2 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            className="text-white mr-2 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            onClick={onAddProductCart}
+                        >
                             <IoAddCircleOutline size={25} />
                         </button>
                         <button
-                            className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                            className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                            onClick={onRemoveProductCart}
+                        >
                             <IoTrashOutline size={20} />
                         </button>
                     </div>
