@@ -1,11 +1,11 @@
 "use client"
 
-import { Product } from "@/data/products"
+import { useRouter } from "next/navigation"
 import Image from "next/image"
-import { IoAddCircleOutline, IoTrashOutline } from "react-icons/io5"
+import type { Product } from "@/data/products"
 import { Star } from "./Star"
 import { actionAddProductCart, actionRemoveProductCart } from "@/actions/shopping_cart.actions"
-import { useRouter } from "next/navigation"
+import { IoAddCircleOutline, IoTrashOutline } from "react-icons/io5"
 
 
 interface Props {

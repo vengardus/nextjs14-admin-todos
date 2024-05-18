@@ -1,6 +1,6 @@
 //"use client"  Llamado desde client component
 import { getCookie, setCookie } from "cookies-next"
-import { ICart } from "@/interface/shopping_cart.interface"
+import type { ICart } from "@/interface/shopping_cart.interface"
 
 
 const getCookieCart = ():ICart => {

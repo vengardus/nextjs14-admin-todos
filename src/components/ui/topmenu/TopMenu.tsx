@@ -1,10 +1,11 @@
-import { ICart } from "@/interface/shopping_cart.interface"
-import { cookies } from "next/headers"
-import { CiBellOn, CiChat1, CiMenuBurger, CiSearch, CiShoppingBasket } from "react-icons/ci"
+import Link from "next/link"
+import { getCookiesCart } from "@/helpers/cookies/cookies_server"
+import type { ICart } from "@/interface/shopping_cart.interface"
+import { CiChat1, CiMenuBurger, CiSearch, CiShoppingBasket } from "react-icons/ci"
+
 
 const getTotalCookieCart = () => {
-    const cookieStore = cookies()
-    const cookieCart: ICart = JSON.parse(cookieStore.get('cart')?.value as string ?? {})
+    const cookieCart: ICart = getCookiesCart()
     const itemCount = Object.values(cookieCart).reduce((acumuladr, actual) => acumuladr + actual, 0)
 
     return itemCount
@@ -35,9 +36,9 @@ export const TopMenu = () => {
                     <button className="flex items-center justify-center w-10 h-10 rounded-xl border bg-gray-100 focus:bg-gray-100 active:bg-gray-200 md:hidden">
                         <CiSearch />
                     </button>
-                    <button className="flex items-center justify-center w-10 h-10 rounded-xl border bg-gray-100 focus:bg-gray-100 active:bg-gray-200">
+                    <Link href={'/dashboard/cart'} className="flex items-center justify-center w-10 h-10 rounded-xl border bg-gray-100 focus:bg-gray-100 active:bg-gray-200">
                         <CiChat1 size={25} />
-                    </button>
+                    </Link>
                     <button className="flex gap-2 px-1 items-center justify-center w-15 h-10 rounded-xl border bg-gray-100 focus:bg-gray-100 active:bg-gray-200">
                         {
                             totalItems > 0
