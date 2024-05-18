@@ -6,17 +6,29 @@ import type { ICart } from "@/interface/shopping_cart.interface"
 const getCookieCart = ():ICart => {
     const cookieCart = getCookie('cart')?? '{}'
 
-    return JSON.parse(cookieCart) 
+    return JSON.parse(cookieCart) as ICart
 }
 
 
 export const actionAddProductCart = (id:string, quantity:number=1) => {
-    const cookieCart = getCookieCart() as ICart
+    const cookieCart:ICart = getCookieCart() 
 
     if ( !cookieCart[id] )
         cookieCart[id] = quantity
     else    
-        cookieCart[id] = +cookieCart[id] + quantity
+        cookieCart[id] = cookieCart[id] + quantity
+    setCookie('cart', JSON.stringify(cookieCart))
+}
+
+export const actionSubProductCart = (id:string, quantity:number=-1) => {
+    const cookieCart = getCookieCart() as ICart
+
+    if ( !cookieCart[id] ) return
+
+    if ( +cookieCart[id] + quantity == 0)
+        delete cookieCart[id]
+    else
+        cookieCart[id] = cookieCart[id] + quantity
     setCookie('cart', JSON.stringify(cookieCart))
 }
 

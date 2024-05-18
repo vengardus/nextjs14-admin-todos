@@ -8,11 +8,13 @@ export const CookiesTemplate = () => {
   return (
     <div className="w-full flex">
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-1 gap-3 w-full">
+        
         <div className="flex flex-col mb-3">
           <span className="text-3xl">TabBars</span>
-          <TabBar currentTab={+cookieTab}/>
+          <TabBar currentTab={+cookieTab} />
         </div>
+
       </div>
     </div>
   )
