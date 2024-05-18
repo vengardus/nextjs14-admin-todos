@@ -5,6 +5,14 @@
     - pnpm
     - docker
 
+## Modulos u opcionees
+
+- dashboard
+- Admin Todos con rest-api
+- Admin Todos con server actions
+- Cookies
+- Productos - Shopping cart
+
 ## Pasos para levatar la app en desarrollo
 
     1. Levantar la BD (postgres establecido en el docker-compose.yml)
