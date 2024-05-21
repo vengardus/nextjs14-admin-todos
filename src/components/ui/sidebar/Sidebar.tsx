@@ -3,9 +3,11 @@ import { SidebarItem } from "./SidebarItem"
 import {
     IoBasketOutline,
     IoBookmarkOutline,
-    IoCheckboxOutline, IoCodeOutline, IoListOutline, IoLogOutOutline
+    IoCheckboxOutline, IoCodeOutline, IoListOutline, IoLogOutOutline,
+    IoSquareSharp
 } from "react-icons/io5"
 import Link from "next/link"
+import { getSession } from "@/helpers/auth/session_server"
 
 
 const menuItems = [
@@ -33,12 +35,22 @@ const menuItems = [
         title: 'Products',
         path: '/dashboard/products',
         icon: <IoBasketOutline size={30} />
+    },
+    {
+        title: 'Profile CS',
+        path: '/dashboard/profile',
+        icon: <IoSquareSharp size={30} />
     }
 ]
 
-export const Sidebar = () => {
+export const Sidebar = async () => {
+    const session = await getSession()
+    const userImage = session
+        ? session.user?.image?? ''
+        : "https://tailus.io/sources/blocks/stats-cards/preview/images/second_user.webp"
+
     return (
-        <aside className="ml-[-100%] fixed z-10 top-0 pb-3 px-6 w-full flex flex-col justify-between h-screen border-r bg-white transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%]">
+        <aside className="ml-[-100%] fixed z-10 top-0 pb-3 px-6 w-full flex flex-col justify-between h-screen border-r bg-white transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%] overflow-x-scroll">
             <div>
                 <div className="-mx-6 px-6 py-4">
                     {/* TODO: Next/Link hacia dashboard */}
@@ -56,13 +68,15 @@ export const Sidebar = () => {
                 <div className="mt-8 text-center">
                     {/* Next/Image */}
                     <Image
-                        src="https://tailus.io/sources/blocks/stats-cards/preview/images/second_user.webp"
-                        alt=""
+                        src={userImage}
+                        alt="user image"
                         className="w-10 h-10 m-auto rounded-full object-cover lg:w-28 lg:h-28"
                         width={50}
                         height={50}
                     />
-                    <h5 className="hidden mt-4 text-xl font-semibold text-gray-600 lg:block">Cynthia J. Watts</h5>
+                    <h5 className="hidden mt-4 text-xl font-semibold text-gray-600 lg:block">
+                        {session?.user?.name}
+                    </h5>
                     <span className="hidden text-gray-400 lg:block">Admin</span>
                 </div>
 
