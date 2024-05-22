@@ -1,9 +1,9 @@
-import type { Product } from "@/data/products"
+import type { IProduct } from "@/data/products"
 import { ProductCard } from "./ProductCard"
 
 
 interface Props {
-    products: Product[]
+    products: IProduct[]
 }
 
 export const ProductList = ({ products }: Props) => {

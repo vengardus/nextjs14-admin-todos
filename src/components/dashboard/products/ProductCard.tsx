@@ -2,14 +2,14 @@
 
 import { useRouter } from "next/navigation"
 import Image from "next/image"
-import type { Product } from "@/data/products"
+import type { IProduct } from "@/data/products"
 import { Star } from "./Star"
 import { actionAddProductCart, actionRemoveProductCart } from "@/actions/shopping_cart.actions"
 import { IoAddCircleOutline, IoTrashOutline } from "react-icons/io5"
 
 
 interface Props {
-    product: Product
+    product: IProduct
 }
 
 export const ProductCard = ({ product }: Props) => {
