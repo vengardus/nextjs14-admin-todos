@@ -43,6 +43,11 @@
 
     5. Ejecutar el SEED para [crear la bd local](localhost:3000/api/seed)
 
+## Nota: Usuario por defecto
+
+    - usuario: test1@google.com
+    - password: 123456
+
 ## Prisma comandos
 
     ```bash

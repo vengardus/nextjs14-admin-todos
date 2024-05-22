@@ -4,11 +4,12 @@ import { PrismaClient } from "@prisma/client";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { actionSignInCredentials } from "./actions/auth.actions";
 
 const prisma = new PrismaClient();
 
 class InvalidLoginError extends CredentialsSignin {
-  code = "Invalid identifier or password"
+    code = "Invalid identifier or password";
 }
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
@@ -36,12 +37,13 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
             },
             async authorize(credentials) {
                 try {
-                    const user = await prisma.user.findUnique({
-                        where: { email: (credentials?.email as string) ?? "" },
-                    });
+                    const user = await actionSignInCredentials(
+                        credentials.email as string,
+                        credentials.password as string
+                    );
                     return user;
                 } catch (error) {
-                  throw Error('Usuario o passowrd incorrecto')
+                    throw Error("Usuario o passowrd incorrecto");
                 }
             },
         }),
@@ -49,21 +51,23 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 
     callbacks: {
         async signIn({ user, account, profile, email, credentials }) {
-          console.log(user)
+            console.log(user);
             return true;
         },
 
         async jwt({ token, user, account, profile }) {
-            const dbUser = await prisma.user.findUnique({where:{email:token.email?? 'no-email'}})
-            token.roles = dbUser?.roles
-            token.isActive = dbUser?.isActive
+            const dbUser = await prisma.user.findUnique({
+                where: { email: token.email ?? "no-email" },
+            });
+            token.roles = dbUser?.roles;
+            token.isActive = dbUser?.isActive;
             return token;
         },
 
         async session({ session, token, user }) {
-            if ( session && session.user ) {
-              session.user.roles = token.roles
-              session.user.isActive = token.isActive
+            if (session && session.user) {
+                session.user.roles = token.roles;
+                session.user.isActive = token.isActive;
             }
             return session;
         },
