@@ -18,9 +18,7 @@ model User {
   email         String    @unique
   emailVerified DateTime?
   image         String?
-  accounts      Account[]
-  sessions      Session[]
-  
+
   // Optional for WebAuthn support
   //Authenticator Authenticator[]
 
@@ -30,6 +28,12 @@ model User {
   // columnas adicionales
   roles    String[] @default(["user"])
   isActive Boolean  @default(true)
+  password String?
+
+  // relaciones
+  accounts Account[]
+  sessions Session[]
+  todos    Todo[]
 }
 
 model Account {
@@ -79,4 +83,7 @@ model Todo {
   complete    Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 }

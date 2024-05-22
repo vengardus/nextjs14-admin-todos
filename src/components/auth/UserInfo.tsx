@@ -31,11 +31,11 @@ export default function UserInfo({ session, title = 'User Info' }: Props) {
                 <div className="flex flex-col gap-3 ">
                     <span>Nombre: {session.user?.name}</span>
                     <span>Email: {session.user?.email}</span>
-                    <span>Roles: {(session.user as User).roles}</span>
+                    <span>Roles: {(session.user as User)?.roles?? '[client]'}</span>
                     
                     <div className="flex flex-col">
                         {
-                            JSON.stringify(session.user)
+                            JSON.stringify(session.user as User)
                         }
                     </div>
                 </div>
