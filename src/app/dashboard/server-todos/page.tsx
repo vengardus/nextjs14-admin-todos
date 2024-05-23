@@ -5,14 +5,23 @@ import prisma from "@/lib/prisma";
 import { TodosTemplate } from "@/components/dashboard/todos/TodosTemplate";
 import { Metadata } from "next";
 import { NewTodo } from "@/components/dashboard/todos/NewTodo";
+import { actionGetSessionServer } from "@/actions/auth.actions";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
     title: 'Lista de Todos',
     description: 'Server Todos'
 }
 
-export default async function RestTodosPage() {
-    const todos = await prisma.todo.findMany({ orderBy: { description: 'asc' } })
+export default async function ServerTodosPage() {
+    const session = await actionGetSessionServer()
+
+    if (!session) redirect('/api/auth/signin')
+
+    const todos = await prisma.todo.findMany({
+        where: { userId: session.user?.id ?? '' },
+        orderBy: { description: 'asc' }
+    })
 
     console.log('construido - sever-todo')
 
@@ -23,7 +32,11 @@ export default async function RestTodosPage() {
                 <div className="w-full pl-7">
                     <NewTodo />
                 </div>
-                <TodosTemplate todos={todos} />
+                {
+                    !todos
+                    ? <h2>No tienes tareas.</h2>
+                    : <TodosTemplate todos={todos} />
+                }
             </div>
         </>
     )

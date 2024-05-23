@@ -10,28 +10,31 @@ import { actionDeleteAllTodo, actionInsertTodo } from "@/actions/todo.actions";
 export const NewTodo = () => {
     //const router = useRouter()
     const [description, setDescription] = useState('')
-    
-    const onSubmit = async(e:FormEvent) => {
+
+    const onSubmit = async (e: FormEvent) => {
         e.preventDefault()
-        if ( ! description.trim().length) return
+        if (!description.trim().length) return
         //await apiTodo.createTodo(description)
-        await actionInsertTodo(description)
+        const resp = await actionInsertTodo(description)
+        if (!resp.success) console.log(`Ocurrió un error: ${resp.message}`)
+        else console.log(resp.data)
         setDescription('')
         //router.refresh()
-        
+
     }
 
-    const deleteAll = async(e:FormEvent) => {
+    const deleteAll = async (e: FormEvent) => {
         e.preventDefault()
         //const count = await apiTodo.deleteManyTodo()
-        const count = await actionDeleteAllTodo()
-        console.log('eliminados', count)
+        const resp = await actionDeleteAllTodo()
+        if (!resp.success) console.log(`Ocurrió un error: ${resp.message}`)
+        else console.log(`Eliminados: ${resp.data}`)
         //router.refresh()
     }
 
     return (
         <form className='flex w-full' onSubmit={onSubmit}>
-            <input 
+            <input
                 type="text"
                 value={description}
                 onChange={e => setDescription(e.target.value)}
@@ -45,8 +48,8 @@ export const NewTodo = () => {
             <span className='flex flex-1'></span>
 
             <button
-                type='submit' 
-                onClick={ (e) => deleteAll(e) }
+                type='submit'
+                onClick={(e) => deleteAll(e)}
                 className="flex items-center justify-center rounded ml-2 bg-red-400 p-2 text-white hover:bg-red-700 transition-all">
                 <IoTrashOutline />
                 <span className="ml-2">Borrar compleatdos</span>

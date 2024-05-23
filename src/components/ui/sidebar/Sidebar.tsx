@@ -8,8 +8,8 @@ import {
     IoCheckboxOutline, IoCodeOutline, IoListOutline,
     IoSquareSharp
 } from "react-icons/io5"
-import { getSession } from "@/helpers/auth/session_server"
 import { LogoutButtonCS } from "./LogoutButtonCS"
+import { actionGetSessionServer } from "@/actions/auth.actions"
 
 
 const menuItems = [
@@ -46,7 +46,7 @@ const menuItems = [
 ]
 
 export const Sidebar = async () => {
-    const session = await getSession()
+    const session = await actionGetSessionServer()
     //const user = session?.user as User
 
     const userImage = session

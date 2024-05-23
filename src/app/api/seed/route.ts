@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
-import email from "next-auth/providers/email";
+import bcrypt from 'bcryptjs'
+
 
 export async function GET(request: Request) {
     await prisma.todo.deleteMany(); // delete all
@@ -8,7 +9,7 @@ export async function GET(request: Request) {
     await prisma.user.create({
         data: {
             email: "test1@google.com",
-            password: "1234",
+            password:  bcrypt.hashSync("1234"),
             roles: ["user", "admin", "super"],
             todos: {
                 create: [

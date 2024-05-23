@@ -5,6 +5,8 @@ import prisma from "@/lib/prisma";
 import { TodosTemplate } from "@/components/dashboard/todos/TodosTemplate";
 import { Metadata } from "next";
 import { NewTodo } from "@/components/dashboard/todos/NewTodo";
+import { actionGetSessionServer } from "@/actions/auth.actions";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: 'Lista de Todos',
@@ -12,9 +14,18 @@ export const metadata: Metadata = {
 }
 
 export default async function RestTodosPage() {
-  const todos = await prisma.todo.findMany({ orderBy: { description: 'asc' } })
+  const session = await actionGetSessionServer()
+  if (!session)
+    redirect('/api/auth/signin')
 
-  console.log('construido rest-todo')
+  const todos = await prisma.todo.findMany(
+    {
+      where: { userId: session.user?.id?? '' },
+      orderBy: { description: 'asc' }
+    }
+  )
+
+  console.log('construido rest-todo', session.user, todos)
 
   return (
     <div className="flex flex-col gap-4">
